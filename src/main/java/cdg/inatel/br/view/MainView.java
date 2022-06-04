@@ -78,11 +78,11 @@ public class MainView {
 
     public void showPedido(Long pedido_id) {
         PedidoDao pedidoDao = new PedidoDao();
-        var p = pedidoDao.get(pedido_id);
+        var pedido = pedidoDao.get(pedido_id);
 
         System.out.println("================================");
-        System.out.println(p.getNome());
-        System.out.println(p.getId());
+        System.out.println("Pedido no " + pedido.getId() + " - " + pedido.getNome() + ":");
+
         System.out.println("================================");
     }
 

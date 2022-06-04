@@ -1,5 +1,6 @@
 package cdg.inatel.br.model;
 
+import cdg.inatel.br.dao.AdicionalDao;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,7 @@ public class Ordem {
     private String observacoes;
     private ArrayList<Adicional> adicionais = new ArrayList<>();
 
-
+    public ArrayList<Adicional> getAdicionais() {
+        return (ArrayList<Adicional>) new AdicionalDao().getByOrdemId(this.id);
+    }
 }
