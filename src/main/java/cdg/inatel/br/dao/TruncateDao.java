@@ -4,13 +4,13 @@ import java.sql.SQLException;
 
 public class TruncateDao extends Database{
 
-    private Boolean check;
+    private Boolean check = false;
     public boolean truncateTable(String table){
         connect();
-        String sql = "TRUNCATE ?;";
+        String sql = "TRUNCATE backdonalds." + table + ";";
         try {
             pst = connection.prepareStatement(sql);
-            pst.setString(1, table);
+            //pst.setString(1, table);
             pst.execute();
             check = true;
         } catch (SQLException e) {

@@ -1,19 +1,20 @@
 package cdg.inatel.br.dao;
 
-import cdg.inatel.br.model.Pedido;
+import cdg.inatel.br.model.Funcionario;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PedidoDao extends Database implements BaseDao<Pedido> {
+public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
+
 
     @Override
-    public Pedido get(Long id) {
+    public Funcionario get(Long id) {
         connect();
 
-        Pedido pedido = new Pedido();
-        String sql = "SELECT * FROM pedido WHERE id = ?;";
+        Funcionario funcionario = new Funcionario();
+        String sql = "SELECT * FROM funcionario WHERE id = ?;";
 
         try {
             int i = 0;
@@ -22,12 +23,10 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
             result = pst.executeQuery();
 
             while (result.next()) {
-                pedido.setId(result.getLong("id"));
-                pedido.setNome(result.getString("nome"));
-                pedido.setCodigo(result.getString("codigo"));
-                pedido.setFinalizado(result.getBoolean("finalizado"));
-                pedido.setRetirado(result.getBoolean("retirado"));
-                pedido.setPago(result.getBoolean("pago"));
+                funcionario.setId(result.getLong("id"));
+                funcionario.setNome(result.getString("nome"));
+                funcionario.setEmail(result.getString("email"));
+                funcionario.setTelefone(result.getString("telefone"));
             }
 
         }catch(SQLException e){
@@ -42,29 +41,25 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
         }
-        return pedido;
+        return funcionario;
     }
 
     @Override
-    public List<Pedido> getAll() {
+    public List<Funcionario> getAll() {
         connect();
 
-        ArrayList<Pedido> pedidos = new ArrayList<>();
-        String sql = "SELECT * FROM pedido;";
+        ArrayList<Funcionario> funcionarios = new ArrayList<>();
+        String sql = "SELECT * FROM funcionario;";
 
         try {
             statement = connection.createStatement();
             result = statement.executeQuery(sql);
             while(result.next()){
-                Pedido pedido = new Pedido();
-                pedido.setId(result.getLong("id"));
-                pedido.setNome(result.getString("nome"));
-                pedido.setCodigo(result.getString("codigo"));
-                pedido.setFinalizado(result.getBoolean("finalizado"));
-                pedido.setRetirado(result.getBoolean("retirado"));
-                pedido.setPago(result.getBoolean("pago"));
+                Funcionario funcionario = new Funcionario();
+                funcionario.setId(result.getLong("id"));
 
-                pedidos.add(pedido);
+
+                funcionarios.add(funcionario);
             }
         }catch(SQLException e){
             System.out.println("Erro de operação: " + e.getMessage());
@@ -78,26 +73,22 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
         }
-        return pedidos;
+        return funcionarios;
     }
 
     @Override
-    public void save(Pedido pedido) {
+    public void save(Funcionario funcionario) {
         connect();
 
-        ArrayList<Pedido> pedidos = new ArrayList<>();
-        String sql = "INSERT INTO pedido VALUES" +
-                        "(?, ?, ?, ?, ?, ?);";
+        ArrayList<Funcionario> funcionarios = new ArrayList<>();
+        String sql = "INSERT INTO funcionario VALUES" +
+                "(?, ?, ?, ?, ?, ?);";
 
         try {
             pst = connection.prepareStatement(sql);
             int i = 0;
-            pst.setLong(++i, pedido.getId());
-            pst.setString(++i, pedido.getNome());
-            pst.setString(++i, pedido.getCodigo());
-            pst.setBoolean(++i, pedido.getRetirado());
-            pst.setBoolean(++i, pedido.getFinalizado());
-            pst.setBoolean(++i, pedido.getPago());
+            pst.setLong(++i, funcionario.getId());
+
 
             pst.execute();
 
@@ -117,24 +108,20 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
     }
 
     @Override
-    public void update(Pedido pedido) {
+    public void update(Funcionario funcionario) {
         connect();
 
-        ArrayList<Pedido> pedidos = new ArrayList<>();
+        ArrayList<Funcionario> funcionarios = new ArrayList<>();
 
-        String sql = "UPDATE pedido SET " +
+        String sql = "UPDATE funcionario SET " +
                 "nome = ?, codigo = ?, retirado =?, finalizado = ?, pago =? " +
                 "WHERE id = ?;";
 
         try {
             pst = connection.prepareStatement(sql);
             int i = 0;
-            pst.setString(++i, pedido.getNome());
-            pst.setString(++i, pedido.getCodigo());
-            pst.setBoolean(++i, pedido.getRetirado());
-            pst.setBoolean(++i, pedido.getFinalizado());
-            pst.setBoolean(++i, pedido.getPago());
-            pst.setLong(++i, pedido.getId());
+
+            pst.setLong(++i, funcionario.getId());
 
             pst.execute();
 
@@ -154,16 +141,16 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
     }
 
     @Override
-    public void delete(Pedido pedido) {
+    public void delete(Funcionario funcionario) {
         connect();
 
-        ArrayList<Pedido> pedidos = new ArrayList<>();
+        ArrayList<Funcionario> funcionarios = new ArrayList<>();
 
-        String sql = "DELETE FROM pedido WHERE id = ?";
+        String sql = "DELETE FROM funcionario WHERE id = ?";
 
         try {
             pst = connection.prepareStatement(sql);
-            pst.setLong(1, pedido.getId());
+            pst.setLong(1, funcionario.getId());
 
             pst.execute();
 

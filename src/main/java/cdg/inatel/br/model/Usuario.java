@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class Usuario {
     private Long id;
-    private String nome;
-    private Integer permissao;
+    private Long funcionario_id;
     private String login;
     private String senha;
+    private Funcionario funcionario;
 }

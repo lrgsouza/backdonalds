@@ -1,54 +1,40 @@
 package cdg.inatel.br;
 
+import cdg.inatel.br.controller.UsuarioController;
 import cdg.inatel.br.dao.PedidoDao;
 import cdg.inatel.br.dao.TruncateDao;
 import cdg.inatel.br.model.Pedido;
+import cdg.inatel.br.model.Usuario;
 
 public class Main {
     public static void main(String[] args) {
-        new TruncateDao().truncateTable("pedido");
-        new TruncateDao().truncateTable("ordem");
+
+        //call login
+        Usuario usuario = new UsuarioController().login();
+        System.out.println("Seja bem vindo " + usuario.getFuncionario().getNome());
+
+        //call menu
 
 
-        PedidoDao pedidoDao = new PedidoDao();
 
-        var pedido = new Pedido(1l, "Chibiruibi", "654987", false, false, true);
 
-        pedidoDao.save(pedido);
+        if (false) {
+            PedidoDao pedidoDao = new PedidoDao();
 
-        System.out.println("-------------------");
-        pedido = pedidoDao.get(100L);
+            var pedido = new Pedido(1L, "Chibiruibi", "654987", false, false, true);
+            pedidoDao.save(pedido);
 
-        System.out.println(pedido.getNomecliente());
-        System.out.println(pedido.getId());
+            System.out.println("===============================================");
 
-        pedido.setNomecliente("Giovanna");
+            var pedidos = pedidoDao.getAll();
 
-        pedidoDao.update(pedido);
-
-        pedido = pedidoDao.get(100L);
-
-        System.out.println(pedido.getNomecliente());
-        System.out.println(pedido.getId());
-
-        System.out.println("-------------------");
-
-        pedido = pedidoDao.get(2L);
-
-        System.out.println(pedido.getNomecliente());
-        System.out.println(pedido.getId());
-
-        System.out.println("-------------------");
-
-        var pedidos = pedidoDao.getAll();
-
-        for (Pedido p:
-             pedidos) {
-            System.out.println(p.getNomecliente());
-            System.out.println(p.getId());
-            System.out.println("-------------------");
+            for (Pedido p :
+                    pedidos) {
+                System.out.println(p.getNome());
+                System.out.println(p.getId());
+                System.out.println("================================");
+            }
         }
-
 
 
     }

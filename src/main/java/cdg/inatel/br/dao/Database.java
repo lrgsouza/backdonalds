@@ -11,7 +11,7 @@ public abstract class Database {
 
     //user pass db
     static final String user = "root";
-    static final String password = "luc@S2017";
+    static final String password = "root";
     static final String database = "backdonalds";
 
     //URL

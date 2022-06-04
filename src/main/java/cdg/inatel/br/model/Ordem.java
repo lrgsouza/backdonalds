@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class Ordem {
     private Long id;
-    private Long pedido_idpedido;
+    private Long pedido_id;
     private Integer quantidade;
-    private Long produto_idproduto;
+    private Long produto_id;
     private String observacoes;
 
 

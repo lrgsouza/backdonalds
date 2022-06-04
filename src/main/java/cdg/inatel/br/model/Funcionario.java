@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Adicional {
+public class Funcionario {
     private Long id;
     private String nome;
-    private Double valor;
-
+    private String email;
+    private String telefone;
 }
