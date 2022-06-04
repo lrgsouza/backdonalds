@@ -26,7 +26,6 @@ public class ProdutoDao extends Database implements BaseDao<Produto> {
                 produto.setNome(result.getString("nome"));
                 produto.setValor(result.getDouble("valor"));
                 produto.setDescricao(result.getString("descricao"));
-
             }
 
         }catch(SQLException e){
@@ -37,6 +36,7 @@ public class ProdutoDao extends Database implements BaseDao<Produto> {
                 connection.close();
                 pst.close();
                 result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
@@ -69,8 +69,9 @@ public class ProdutoDao extends Database implements BaseDao<Produto> {
         finally {
             try{
                 connection.close();
-                statement.close();
+                pst.close();
                 result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
@@ -82,9 +83,8 @@ public class ProdutoDao extends Database implements BaseDao<Produto> {
     public void save(Produto produto) {
         connect();
 
-        ArrayList<Produto> produtos = new ArrayList<>();
         String sql = "INSERT INTO produto VALUES" +
-                "(?, ?, ?, ?, ?, ?);";
+                "(?, ?, ?, ?);";
 
         try {
             pst = connection.prepareStatement(sql);
@@ -105,6 +105,8 @@ public class ProdutoDao extends Database implements BaseDao<Produto> {
             try{
                 connection.close();
                 pst.close();
+                result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
@@ -115,10 +117,8 @@ public class ProdutoDao extends Database implements BaseDao<Produto> {
     public void update(Produto produto) {
         connect();
 
-        ArrayList<Produto> produtos = new ArrayList<>();
-
         String sql = "UPDATE produto SET " +
-                "nome = ?, codigo = ?, retirado =?, finalizado = ?, pago =? " +
+                "nome = ?, valor =?, descricao =? " +
                 "WHERE id = ?;";
 
         try {
@@ -140,6 +140,8 @@ public class ProdutoDao extends Database implements BaseDao<Produto> {
             try{
                 connection.close();
                 pst.close();
+                result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
@@ -149,8 +151,6 @@ public class ProdutoDao extends Database implements BaseDao<Produto> {
     @Override
     public void delete(Produto produto) {
         connect();
-
-        ArrayList<Produto> produtos = new ArrayList<>();
 
         String sql = "DELETE FROM produto WHERE id = ?";
 
@@ -169,6 +169,8 @@ public class ProdutoDao extends Database implements BaseDao<Produto> {
             try{
                 connection.close();
                 pst.close();
+                result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }

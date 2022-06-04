@@ -25,8 +25,6 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
                 adicional.setId(result.getLong("id"));
                 adicional.setNome(result.getString("nome"));
                 adicional.setValor(result.getDouble("valor"));
-                
-
             }
 
         }catch(SQLException e){
@@ -37,6 +35,7 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
                 connection.close();
                 pst.close();
                 result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
@@ -59,7 +58,6 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
                 adicional.setId(result.getLong("id"));
                 adicional.setNome(result.getString("nome"));
                 adicional.setValor(result.getDouble("valor"));
-                
 
                 adicionais.add(adicional);
             }
@@ -69,8 +67,9 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
         finally {
             try{
                 connection.close();
-                statement.close();
+                pst.close();
                 result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
@@ -82,9 +81,8 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
     public void save(Adicional adicional) {
         connect();
 
-        ArrayList<Adicional> adicionais = new ArrayList<>();
-        String sql = "INSERT INTO adicional VALUES" +
-                "(?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO adicional VALUES " +
+                "(?, ?, ?);";
 
         try {
             pst = connection.prepareStatement(sql);
@@ -104,6 +102,8 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
             try{
                 connection.close();
                 pst.close();
+                result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
@@ -114,10 +114,8 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
     public void update(Adicional adicional) {
         connect();
 
-        ArrayList<Adicional> adicionais = new ArrayList<>();
-
         String sql = "UPDATE adicional SET " +
-                "nome = ?, codigo = ?, retirado =?, finalizado = ?, pago =? " +
+                "nome = ?, valor =? " +
                 "WHERE id = ?;";
 
         try {
@@ -138,6 +136,8 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
             try{
                 connection.close();
                 pst.close();
+                result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
@@ -147,8 +147,6 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
     @Override
     public void delete(Adicional adicional) {
         connect();
-
-        ArrayList<Adicional> adicionais = new ArrayList<>();
 
         String sql = "DELETE FROM adicional WHERE id = ?";
 
@@ -167,6 +165,8 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
             try{
                 connection.close();
                 pst.close();
+                result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }

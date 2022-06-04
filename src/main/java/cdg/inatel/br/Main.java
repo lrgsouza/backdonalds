@@ -14,7 +14,7 @@ public class Main {
 
         //call login
         //Usuario usuario = new UsuarioController().login();
-        Usuario usuario = new UsuarioDao().get(2L);
+        Usuario usuario = new UsuarioDao().get(1L);
         usuario.setFuncionario(new FuncionarioDao().get(usuario.getFuncionario_id()));
         /*===========================================================================*/
         System.out.println("Seja bem vindo " + usuario.getFuncionario().getNome());

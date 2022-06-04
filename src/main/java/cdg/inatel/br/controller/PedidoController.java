@@ -30,8 +30,6 @@ public class PedidoController {
         System.out.println("Aqui aparece o pedido:");
         new MainView().showPedido(pedido.getId());
 
-
-
         return null;
     }
 

@@ -37,6 +37,7 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
                 connection.close();
                 pst.close();
                 result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
@@ -70,8 +71,9 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
         finally {
             try{
                 connection.close();
-                statement.close();
+                pst.close();
                 result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
@@ -99,7 +101,7 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
             result = statement.executeQuery(sql);
 
             if (result.next()){
-                return result.getLong("id");
+                pedido.setId(result.getLong("id"));
             }
 
         }catch(SQLException e){
@@ -109,25 +111,47 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
             try{
                 connection.close();
                 pst.close();
+                result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
         }
-        return null;
+        return pedido.getId();
     }
 
 
     @Override
     public void save(Pedido pedido) {
+        connect();
 
+        String sql = "INSERT INTO pedido (nome) VALUES" +
+                "(?);";
 
+        try {
+            pst = connection.prepareStatement(sql);
+            int i = 0;
+            pst.setString(++i, pedido.getNome());
+            pst.execute();
+
+        }catch(SQLException e){
+            System.out.println("Erro de operação: " + e.getMessage());
+        }
+        finally {
+            try{
+                connection.close();
+                pst.close();
+                result.close();
+                statement.close();
+            } catch (SQLException e){
+                System.out.println("Erro ao fechar conexão: " + e.getMessage());
+            }
+        }
     }
 
     @Override
     public void update(Pedido pedido) {
         connect();
-
-        ArrayList<Pedido> pedidos = new ArrayList<>();
 
         String sql = "UPDATE pedido SET " +
                 "nome = ?, codigo = ?, retirado =?, finalizado = ?, pago =? " +
@@ -153,6 +177,8 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
             try{
                 connection.close();
                 pst.close();
+                result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
@@ -162,8 +188,6 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
     @Override
     public void delete(Pedido pedido) {
         connect();
-
-        ArrayList<Pedido> pedidos = new ArrayList<>();
 
         String sql = "DELETE FROM pedido WHERE id = ?";
 
@@ -182,6 +206,8 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
             try{
                 connection.close();
                 pst.close();
+                result.close();
+                statement.close();
             } catch (SQLException e){
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
