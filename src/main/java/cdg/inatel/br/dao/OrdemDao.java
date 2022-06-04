@@ -1,5 +1,6 @@
 package cdg.inatel.br.dao;
 
+import cdg.inatel.br.model.Adicional;
 import cdg.inatel.br.model.Ordem;
 
 import java.sql.*;
@@ -13,7 +14,7 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
         connect();
 
         Ordem ordem = new Ordem();
-        String sql = "SELECT * FROM ordem WHERE idordem = ?;";
+        String sql = "SELECT * FROM ordem WHERE id = ?;";
 
         try {
             int i = 0;
@@ -75,18 +76,60 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
     public void save(Ordem ordem) {
         connect();
 
-        ArrayList<Ordem> ordens = new ArrayList<>();
-        String sql = "INSERT INTO ordem VALUES" +
-                "(?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO ordem (pedido_id, quantidade, produto_id, observacoes) VALUES" +
+                "(?, ?, ?, ?);";
 
         try {
             pst = connection.prepareStatement(sql);
             int i = 0;
-
+            pst.setLong(++i, ordem.getPedido_id());
+            pst.setInt(++i, ordem.getQuantidade());
+            pst.setLong(++i, ordem.getProduto_id());
+            pst.setString(++i, ordem.getObservacoes());
 
             pst.execute();
 
-            System.out.println("Executado com sucesso");
+            System.out.println("Ordem adicionada com sucesso.");
+
+            sql = "SELECT LAST_INSERT_ID() AS id;";
+
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+
+            while (result.next()){
+                ordem.setId(result.getLong("id"));
+            }
+            //criando adicionais da ordem
+            for (Adicional a:
+                 ordem.getAdicionais()) {
+                saveOrdemAdicional(ordem.getId(), a.getId());
+            }
+
+        }catch(SQLException e){
+            System.out.println("Erro de operação: " + e.getMessage());
+        }
+        finally {
+            try{
+                connection.close();
+                pst.close();
+            } catch (SQLException e){
+                System.out.println("Erro ao fechar conexão: " + e.getMessage());
+            }
+        }
+    }
+
+    public void saveOrdemAdicional(Long ordem_id, Long adicional_id) {
+        connect();
+        String sql = "INSERT INTO ordem_has_adicional (ordem_id, adicional_id) VALUES" +
+                "(?, ?);";
+
+        try {
+            pst = connection.prepareStatement(sql);
+            int i = 0;
+            pst.setLong(++i, ordem_id);
+            pst.setLong(++i, adicional_id);
+
+            pst.execute();
 
         }catch(SQLException e){
             System.out.println("Erro de operação: " + e.getMessage());
@@ -104,8 +147,6 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
     @Override
     public void update(Ordem ordem) {
         connect();
-
-        ArrayList<Ordem> ordens = new ArrayList<>();
 
         String sql = "UPDATE ordem SET " +
                 "nomecliente = ?, codigo = ?, retirado =?, finalizado = ?, pago =? " +
@@ -136,8 +177,6 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
     @Override
     public void delete(Ordem ordem) {
         connect();
-
-        ArrayList<Ordem> ordens = new ArrayList<>();
 
         String sql = "DELETE FROM ordem WHERE id = ?";
 

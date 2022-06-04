@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class Pedido {
     private Long id;
     private String nome;
-    private String codigo;
     private Boolean finalizado;
     private Boolean retirado;
     private Boolean pago;
