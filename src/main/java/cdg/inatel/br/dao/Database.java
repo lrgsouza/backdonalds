@@ -27,4 +27,19 @@ public abstract class Database {
             System.out.println("Erro de conexão!" + e.getMessage());
         }
     }
+
+    public void closeAllSql(){
+        try{
+            if(connection!=null)
+                connection.close();
+            if(statement!=null)
+                statement.close();
+            if(result!=null)
+                result.close();
+            if(pst!=null)
+                pst.close();
+        } catch (SQLException e){
+            System.out.println("Erro ao fechar conexão: " + e.getMessage());
+        }
+    }
 }

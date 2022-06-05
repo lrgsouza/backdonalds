@@ -33,14 +33,7 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try {
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return usuario;
     }
@@ -70,14 +63,7 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return usuario;
     }
@@ -105,14 +91,7 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return usuarios;
     }
@@ -140,14 +119,7 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
@@ -175,14 +147,7 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
@@ -204,14 +169,7 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 }

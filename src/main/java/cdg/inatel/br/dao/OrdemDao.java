@@ -34,14 +34,7 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return ordem;
     }
@@ -71,14 +64,7 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return ordens;
     }
@@ -109,10 +95,6 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
 
             while (result.next()){
                 ordem.setId(result.getLong("id"));
-                ordem.setPedido_id(result.getLong("pedido_id"));
-                ordem.setQuantidade(result.getInt("quantidade"));
-                ordem.setProduto_id(result.getLong("produto_id"));
-                ordem.setObservacoes(result.getString("observacoes"));
             }
             //criando adicionais da ordem
             for (Adicional a:
@@ -124,14 +106,7 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
@@ -152,14 +127,7 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
@@ -188,14 +156,7 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
@@ -217,14 +178,7 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 }

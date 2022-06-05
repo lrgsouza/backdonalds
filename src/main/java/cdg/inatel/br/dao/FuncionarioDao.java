@@ -33,14 +33,7 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return funcionario;
     }
@@ -68,14 +61,7 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return funcionarios;
     }
@@ -103,14 +89,7 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
@@ -139,14 +118,7 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
@@ -168,14 +140,7 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-                statement.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 }
