@@ -22,62 +22,18 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
 
             if (!result.next()) {
                 usuario = null;
-            }
-            else {
+            } else {
                 usuario.setId(result.getLong("id"));
                 usuario.setLogin(result.getString("login"));
                 usuario.setSenha(result.getString("senha"));
                 usuario.setFuncionario_id(result.getLong("funcionario_id"));
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
-        }
-        return usuario;
-    }
-
-    public Usuario getFuncionario(Usuario usuario) {
-        connect();
-
-        String sql = "SELECT * FROM funcionario WHERE login = ? AND senha = ?;";
-
-        try {
-            int i = 0;
-            pst = connection.prepareStatement(sql);
-            pst.setString(++i, usuario.getLogin());
-            pst.setString(++i, usuario.getSenha());
-            result = pst.executeQuery();
-
-            if (!result.next()) {
-                usuario = null;
-            }
-            else {
-                usuario.setId(result.getLong("id"));
-                usuario.setLogin(result.getString("login"));
-                usuario.setSenha(result.getString("senha"));
-                usuario.setFuncionario_id(result.getLong("funcionario_id"));
-            }
-
-        }catch(SQLException e){
-            System.out.println("Erro de operação: " + e.getMessage());
-        }
-        finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return usuario;
     }
@@ -107,19 +63,13 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return usuario;
     }
 
     @Override
-    public List<Usuario> getAll() {
+    public ArrayList<Usuario> getAll() {
         connect();
 
         ArrayList<Usuario> usuarios = new ArrayList<>();
@@ -131,7 +81,9 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             while(result.next()){
                 Usuario usuario = new Usuario();
                 usuario.setId(result.getLong("id"));
-
+                usuario.setLogin(result.getString("login"));
+                usuario.setSenha(result.getString("senha"));
+                usuario.setFuncionario_id(result.getLong("funcionario_id"));
 
                 usuarios.add(usuario);
             }
@@ -139,13 +91,7 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                statement.close();
-                result.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return usuarios;
     }
@@ -154,15 +100,16 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
     public void save(Usuario usuario) {
         connect();
 
-        ArrayList<Usuario> usuarios = new ArrayList<>();
         String sql = "INSERT INTO usuario VALUES" +
-                "(?, ?, ?, ?, ?, ?);";
+                "(?, ?, ?, ?);";
 
         try {
             pst = connection.prepareStatement(sql);
             int i = 0;
             pst.setLong(++i, usuario.getId());
-
+            pst.setString(++i, usuario.getLogin());
+            pst.setString(++i, usuario.getSenha());
+            pst.setLong(++i, usuario.getFuncionario_id());
 
             pst.execute();
 
@@ -172,12 +119,7 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
@@ -185,16 +127,16 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
     public void update(Usuario usuario) {
         connect();
 
-        ArrayList<Usuario> usuarios = new ArrayList<>();
-
         String sql = "UPDATE usuario SET " +
-                "nome = ?, codigo = ?, retirado =?, finalizado = ?, pago =? " +
+                "login = ?, senha = ? " +
                 "WHERE id = ?;";
 
         try {
             pst = connection.prepareStatement(sql);
             int i = 0;
 
+            pst.setString(++i, usuario.getLogin());
+            pst.setString(++i, usuario.getSenha());
             pst.setLong(++i, usuario.getId());
 
             pst.execute();
@@ -205,20 +147,13 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
     @Override
     public void delete(Usuario usuario) {
         connect();
-
-        ArrayList<Usuario> usuarios = new ArrayList<>();
 
         String sql = "DELETE FROM usuario WHERE id = ?";
 
@@ -234,12 +169,7 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 }

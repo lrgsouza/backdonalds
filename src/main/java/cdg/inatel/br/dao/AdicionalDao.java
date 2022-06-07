@@ -25,27 +25,19 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
                 adicional.setId(result.getLong("id"));
                 adicional.setNome(result.getString("nome"));
                 adicional.setValor(result.getDouble("valor"));
-                
-
             }
 
         }catch(SQLException e){
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return adicional;
     }
 
     @Override
-    public List<Adicional> getAll() {
+    public ArrayList<Adicional> getAll() {
         connect();
 
         ArrayList<Adicional> adicionais = new ArrayList<>();
@@ -59,7 +51,6 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
                 adicional.setId(result.getLong("id"));
                 adicional.setNome(result.getString("nome"));
                 adicional.setValor(result.getDouble("valor"));
-                
 
                 adicionais.add(adicional);
             }
@@ -67,13 +58,40 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                statement.close();
-                result.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
+            closeAllSql();
+        }
+        return adicionais;
+    }
+
+    public ArrayList<Adicional> getByOrdemId(Long ordem_id) {
+        connect();
+
+        ArrayList<Adicional> adicionais = new ArrayList<>();
+        String sql = "SELECT * FROM adicional a " +
+                "INNER JOIN ordem_has_adicional oa " +
+                "   ON oa.adicional_id = a.id " +
+                "INNER JOIN ordem o " +
+                "   ON o.id = oa.ordem_id " +
+                "WHERE o.id = ?;";
+
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setLong(1, ordem_id);
+
+            result = pst.executeQuery();
+            while(result.next()){
+                Adicional adicional = new Adicional();
+                adicional.setId(result.getLong("id"));
+                adicional.setNome(result.getString("nome"));
+                adicional.setValor(result.getDouble("valor"));
+
+                adicionais.add(adicional);
             }
+        }catch(SQLException e){
+            System.out.println("Erro de operação: " + e.getMessage());
+        }
+        finally {
+            closeAllSql();
         }
         return adicionais;
     }
@@ -82,9 +100,8 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
     public void save(Adicional adicional) {
         connect();
 
-        ArrayList<Adicional> adicionais = new ArrayList<>();
-        String sql = "INSERT INTO adicional VALUES" +
-                "(?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO adicional VALUES " +
+                "(?, ?, ?);";
 
         try {
             pst = connection.prepareStatement(sql);
@@ -101,12 +118,7 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
@@ -114,10 +126,8 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
     public void update(Adicional adicional) {
         connect();
 
-        ArrayList<Adicional> adicionais = new ArrayList<>();
-
         String sql = "UPDATE adicional SET " +
-                "nome = ?, codigo = ?, retirado =?, finalizado = ?, pago =? " +
+                "nome = ?, valor =? " +
                 "WHERE id = ?;";
 
         try {
@@ -135,20 +145,13 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
     @Override
     public void delete(Adicional adicional) {
         connect();
-
-        ArrayList<Adicional> adicionais = new ArrayList<>();
 
         String sql = "DELETE FROM adicional WHERE id = ?";
 
@@ -164,12 +167,7 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 }

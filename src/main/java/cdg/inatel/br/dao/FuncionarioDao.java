@@ -33,19 +33,13 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return funcionario;
     }
 
     @Override
-    public List<Funcionario> getAll() {
+    public ArrayList<Funcionario> getAll() {
         connect();
 
         ArrayList<Funcionario> funcionarios = new ArrayList<>();
@@ -57,7 +51,9 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             while(result.next()){
                 Funcionario funcionario = new Funcionario();
                 funcionario.setId(result.getLong("id"));
-
+                funcionario.setNome(result.getString("nome"));
+                funcionario.setEmail(result.getString("email"));
+                funcionario.setTelefone(result.getString("telefone"));
 
                 funcionarios.add(funcionario);
             }
@@ -65,13 +61,7 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                statement.close();
-                result.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return funcionarios;
     }
@@ -80,7 +70,6 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
     public void save(Funcionario funcionario) {
         connect();
 
-        ArrayList<Funcionario> funcionarios = new ArrayList<>();
         String sql = "INSERT INTO funcionario VALUES" +
                 "(?, ?, ?, ?, ?, ?);";
 
@@ -88,7 +77,9 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             pst = connection.prepareStatement(sql);
             int i = 0;
             pst.setLong(++i, funcionario.getId());
-
+            pst.setString(++i, funcionario.getNome());
+            pst.setString(++i, funcionario.getEmail());
+            pst.setString(++i, funcionario.getTelefone());
 
             pst.execute();
 
@@ -98,12 +89,7 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
@@ -111,16 +97,17 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
     public void update(Funcionario funcionario) {
         connect();
 
-        ArrayList<Funcionario> funcionarios = new ArrayList<>();
-
         String sql = "UPDATE funcionario SET " +
-                "nome = ?, codigo = ?, retirado =?, finalizado = ?, pago =? " +
+                "nome = ?, email = ?, telefone =? " +
                 "WHERE id = ?;";
 
         try {
             pst = connection.prepareStatement(sql);
             int i = 0;
 
+            pst.setString(++i, funcionario.getNome());
+            pst.setString(++i, funcionario.getEmail());
+            pst.setString(++i, funcionario.getTelefone());
             pst.setLong(++i, funcionario.getId());
 
             pst.execute();
@@ -131,20 +118,13 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
     @Override
     public void delete(Funcionario funcionario) {
         connect();
-
-        ArrayList<Funcionario> funcionarios = new ArrayList<>();
 
         String sql = "DELETE FROM funcionario WHERE id = ?";
 
@@ -160,12 +140,7 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 }

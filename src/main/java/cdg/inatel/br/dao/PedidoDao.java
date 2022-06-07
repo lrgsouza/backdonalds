@@ -33,19 +33,13 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-                result.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return pedido;
     }
 
     @Override
-    public List<Pedido> getAll() {
+    public ArrayList<Pedido> getAll() {
         connect();
 
         ArrayList<Pedido> pedidos = new ArrayList<>();
@@ -68,13 +62,7 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                statement.close();
-                result.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
         return pedidos;
     }
@@ -99,35 +87,43 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
             result = statement.executeQuery(sql);
 
             if (result.next()){
-                return result.getLong("id");
+                pedido.setId(result.getLong("id"));
             }
 
         }catch(SQLException e){
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
-        return null;
+        return pedido.getId();
     }
 
 
     @Override
     public void save(Pedido pedido) {
+        connect();
 
+        String sql = "INSERT INTO pedido (nome) VALUES" +
+                "(?);";
 
+        try {
+            pst = connection.prepareStatement(sql);
+            int i = 0;
+            pst.setString(++i, pedido.getNome());
+            pst.execute();
+
+        }catch(SQLException e){
+            System.out.println("Erro de operação: " + e.getMessage());
+        }
+        finally {
+            closeAllSql();
+        }
     }
 
     @Override
     public void update(Pedido pedido) {
         connect();
-
-        ArrayList<Pedido> pedidos = new ArrayList<>();
 
         String sql = "UPDATE pedido SET " +
                 "nome = ?, codigo = ?, retirado =?, finalizado = ?, pago =? " +
@@ -150,20 +146,13 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 
     @Override
     public void delete(Pedido pedido) {
         connect();
-
-        ArrayList<Pedido> pedidos = new ArrayList<>();
 
         String sql = "DELETE FROM pedido WHERE id = ?";
 
@@ -179,12 +168,7 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
             System.out.println("Erro de operação: " + e.getMessage());
         }
         finally {
-            try{
-                connection.close();
-                pst.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
+            closeAllSql();
         }
     }
 }

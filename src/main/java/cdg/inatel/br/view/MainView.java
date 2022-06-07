@@ -66,26 +66,45 @@ public class MainView {
         PedidoDao pedidoDao = new PedidoDao();
         var pedidos = pedidoDao.getAll();
 
+        System.out.println("========= Pedidos: =============");
         for (
                 Pedido p :
                 pedidos) {
-            System.out.println("================================");
-            System.out.println(p.getNome());
-            System.out.println(p.getId());
-            System.out.println("================================");
+            System.out.println("Pedido no " + p.getId() + " - " + p.getNome());
         }
-    }
-
-    public void showPedido(Long pedido_id) {
-        PedidoDao pedidoDao = new PedidoDao();
-        var p = pedidoDao.get(pedido_id);
-
-        System.out.println("================================");
-        System.out.println(p.getNome());
-        System.out.println(p.getId());
         System.out.println("================================");
     }
 
+    public void showPedido(Pedido pedido, ArrayList<Ordem> ordens) {
+
+        System.out.println("================================");
+        System.out.println("Pedido no " + pedido.getId() + " - " + pedido.getNome() + ":");
+
+        for (Ordem ordem:
+                ordens) {
+            showOrdem(ordem);
+        }
+
+        System.out.println("================================");
+    }
+
+    public void showOrdem(Ordem ordem) {
+
+        System.out.println("================================");
+
+        System.out.println("      " + ordem.getQuantidade() + " " +
+                new ProdutoDao().get(ordem.getProduto_id()).getNome());
+
+
+        for (Adicional adicional:
+                ordem.getAdicionais()) {
+            System.out.println("            + " + adicional.getNome());
+        }
+
+        System.out.println("      Obs: " + ordem.getObservacoes());
+
+        System.out.println("================================");
+    }
     public void allProdutos() {
         ProdutoDao produtoDao = new ProdutoDao();
         var produtos = produtoDao.getAll();
