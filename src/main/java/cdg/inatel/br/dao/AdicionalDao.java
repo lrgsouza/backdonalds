@@ -37,7 +37,7 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
     }
 
     @Override
-    public List<Adicional> getAll() {
+    public ArrayList<Adicional> getAll() {
         connect();
 
         ArrayList<Adicional> adicionais = new ArrayList<>();
@@ -63,7 +63,7 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
         return adicionais;
     }
 
-    public List<Adicional> getByOrdemId(Long ordem_id) {
+    public ArrayList<Adicional> getByOrdemId(Long ordem_id) {
         connect();
 
         ArrayList<Adicional> adicionais = new ArrayList<>();

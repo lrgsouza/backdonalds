@@ -39,7 +39,7 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
     }
 
     @Override
-    public List<Funcionario> getAll() {
+    public ArrayList<Funcionario> getAll() {
         connect();
 
         ArrayList<Funcionario> funcionarios = new ArrayList<>();

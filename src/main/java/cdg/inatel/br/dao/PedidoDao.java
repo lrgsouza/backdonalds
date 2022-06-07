@@ -39,7 +39,7 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
     }
 
     @Override
-    public List<Pedido> getAll() {
+    public ArrayList<Pedido> getAll() {
         connect();
 
         ArrayList<Pedido> pedidos = new ArrayList<>();

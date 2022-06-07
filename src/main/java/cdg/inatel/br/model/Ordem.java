@@ -17,8 +17,4 @@ public class Ordem {
     private Long produto_id;
     private String observacoes;
     private ArrayList<Adicional> adicionais = new ArrayList<>();
-
-    public ArrayList<Adicional> getAdicionais() {
-        return (ArrayList<Adicional>) new AdicionalDao().getByOrdemId(this.id);
-    }
 }

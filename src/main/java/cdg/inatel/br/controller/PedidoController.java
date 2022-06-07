@@ -11,26 +11,29 @@ import java.util.Scanner;
 
 public class PedidoController {
     Scanner input = new Scanner(System.in);
+
     public Pedido efetuarPedido(){
         //criando pedido
         Pedido pedido = new Pedido();
         System.out.print("Nome do cliente: ");
-        pedido.setNome(input.next());
+        pedido.setNome(input.nextLine());
         pedido.setId(new PedidoDao().saveReturning(pedido));
+
         //criando ordens com o id do pedido
-
-        var ordens = new MainView().getOrdens(pedido.getId());
-
-        for (Ordem ordem:
-             ordens) {
-            new OrdemDao().save(ordem);
-        }
+        new OrdemController().realizarOrdens(pedido.getId());
 
         //mostrando pedido
-        System.out.println("Aqui aparece o pedido:");
-        new MainView().showPedido(pedido.getId());
+        mostrarPedido(pedido.getId());
 
-        return null;
+        return pedido;
+    }
+
+    public void mostrarPedido(Long pedido_id){
+        Pedido pedido = new PedidoDao().get(pedido_id);
+        ArrayList<Ordem> ordens = new OrdemController().getByPedidoId(pedido_id);
+
+        new MainView().showPedido(pedido, ordens);
+
     }
 
 }

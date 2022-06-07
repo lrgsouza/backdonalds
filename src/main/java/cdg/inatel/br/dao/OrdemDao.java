@@ -40,7 +40,7 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
     }
 
     @Override
-    public List<Ordem> getAll() {
+    public ArrayList<Ordem> getAll() {
         connect();
 
         ArrayList<Ordem> ordens = new ArrayList<>();
@@ -52,6 +52,37 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
             while(result.next()){
                 Ordem ordem = new Ordem();
 
+                ordem.setId(result.getLong("id"));
+                ordem.setPedido_id(result.getLong("pedido_id"));
+                ordem.setQuantidade(result.getInt("quantidade"));
+                ordem.setProduto_id(result.getLong("produto_id"));
+                ordem.setObservacoes(result.getString("observacoes"));
+
+                ordens.add(ordem);
+            }
+        }catch(SQLException e){
+            System.out.println("Erro de operação: " + e.getMessage());
+        }
+        finally {
+            closeAllSql();
+        }
+        return ordens;
+    }
+
+    public ArrayList<Ordem> getByPedidoId(Long pedido_id) {
+        connect();
+
+        ArrayList<Ordem> ordens = new ArrayList<>();
+        String sql = "SELECT * FROM ordem " +
+                "WHERE pedido_id = ?;";
+
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setLong(1, pedido_id);
+
+            result = pst.executeQuery();
+            while(result.next()){
+                Ordem ordem = new Ordem();
                 ordem.setId(result.getLong("id"));
                 ordem.setPedido_id(result.getLong("pedido_id"));
                 ordem.setQuantidade(result.getInt("quantidade"));

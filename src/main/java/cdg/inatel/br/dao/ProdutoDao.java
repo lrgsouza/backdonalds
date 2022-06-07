@@ -38,7 +38,7 @@ public class ProdutoDao extends Database implements BaseDao<Produto> {
     }
 
     @Override
-    public List<Produto> getAll() {
+    public ArrayList<Produto> getAll() {
         connect();
 
         ArrayList<Produto> produtos = new ArrayList<>();

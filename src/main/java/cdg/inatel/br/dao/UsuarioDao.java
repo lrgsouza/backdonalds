@@ -69,7 +69,7 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
     }
 
     @Override
-    public List<Usuario> getAll() {
+    public ArrayList<Usuario> getAll() {
         connect();
 
         ArrayList<Usuario> usuarios = new ArrayList<>();
