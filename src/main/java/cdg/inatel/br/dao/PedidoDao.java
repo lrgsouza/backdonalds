@@ -68,7 +68,7 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
     }
 
 
-    public Long saveReturning(Pedido pedido) {
+    public static void saveReturning(Pedido pedido) {
         connect();
 
         ArrayList<Pedido> pedidos = new ArrayList<>();
@@ -96,7 +96,6 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
         finally {
             closeAllSql();
         }
-        return pedido.getId();
     }
 
 

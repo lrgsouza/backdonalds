@@ -14,10 +14,7 @@ public class PedidoController {
 
     public Pedido efetuarPedido(){
         //criando pedido
-        Pedido pedido = new Pedido();
-        System.out.print("Nome do cliente: ");
-        pedido.setNome(input.nextLine());
-        pedido.setId(new PedidoDao().saveReturning(pedido));
+        Pedido pedido = Pedido.getUserInput();
 
         //criando ordens com o id do pedido
         new OrdemController().realizarOrdens(pedido.getId());

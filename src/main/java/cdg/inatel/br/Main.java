@@ -20,26 +20,8 @@ public class Main {
         System.out.println("Seja bem vindo " + usuario.getFuncionario().getNome());
 
         //call menu
-        new MainView().mainMenu();
+        MainView.mainMenu();
 
-
-        if (false) {
-            PedidoDao pedidoDao = new PedidoDao();
-
-            var pedido = new Pedido(1L, "Chibiruibi", false, false, true);
-            pedidoDao.save(pedido);
-
-            System.out.println("===============================================");
-
-            var pedidos = pedidoDao.getAll();
-
-            for (Pedido p :
-                    pedidos) {
-                System.out.println(p.getNome());
-                System.out.println(p.getId());
-                System.out.println("================================");
-            }
-        }
 
 
     }

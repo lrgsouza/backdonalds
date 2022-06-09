@@ -12,8 +12,9 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class MainView {
-    Scanner input = new Scanner(System.in);
+
     public Usuario login(){
+        Scanner input = new Scanner(System.in);
         Usuario usuario = new Usuario();
         System.out.println("===========SYSTEM LOGIN===========");
         System.out.print("Login: ");
@@ -24,7 +25,8 @@ public class MainView {
         return usuario;
     }
 
-    public void mainMenu(){
+    public static void mainMenu(){
+        Scanner input = new Scanner(System.in);
         System.out.println("===========SYSTEM MENU===========");
         System.out.println("1 - EFETUAR PEDIDO");
         System.out.println("2 - CANCELAR PEDIDO");
@@ -42,14 +44,13 @@ public class MainView {
                 System.out.println("cancelando pedido");
                 break;
             case 3:
-                System.out.println("vendo pedido");
                 allPedidos();
                 break;
             case 4:
                 System.out.print("Saindo");
                 for (int i = 0; i < 3; i++) {
                     try {
-                        TimeUnit.SECONDS.sleep(1L);
+                        TimeUnit.MILLISECONDS.sleep(500);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -62,7 +63,7 @@ public class MainView {
         }
     }
 
-    public void allPedidos() {
+    public static void allPedidos() {
         PedidoDao pedidoDao = new PedidoDao();
         var pedidos = pedidoDao.getAll();
 
@@ -75,7 +76,7 @@ public class MainView {
         System.out.println("================================");
     }
 
-    public void showPedido(Pedido pedido, ArrayList<Ordem> ordens) {
+    public static void showPedido(Pedido pedido, ArrayList<Ordem> ordens) {
 
         System.out.println("================================");
         System.out.println("Pedido no " + pedido.getId() + " - " + pedido.getNome() + ":");
@@ -88,7 +89,7 @@ public class MainView {
         System.out.println("================================");
     }
 
-    public void showOrdem(Ordem ordem) {
+    public static void showOrdem(Ordem ordem) {
 
         System.out.println("================================");
 
@@ -130,6 +131,7 @@ public class MainView {
     }
 
     public ArrayList<Ordem> getOrdens(Long pedido_id){
+        Scanner input = new Scanner(System.in);
         var ordens = new ArrayList<Ordem>();
         System.out.println("Escolha um produto: ");
         allProdutos();

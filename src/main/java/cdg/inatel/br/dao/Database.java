@@ -4,14 +4,14 @@ import java.sql.*;
 
 public abstract class Database {
     //
-    Connection connection;
-    Statement statement;
-    ResultSet result;
-    PreparedStatement pst;
+    static Connection connection;
+    static Statement statement;
+    static ResultSet result;
+    static PreparedStatement pst;
 
     //user pass db
     static final String user = "root";
-    static final String password = "root";
+    static final String password = "luc@S2017";
     static final String database = "backdonalds";
 
     //URL
@@ -19,7 +19,7 @@ public abstract class Database {
     private boolean check = false;
 
     // =====> connect <=====
-    public void connect(){
+    public static void connect(){
         try {
             connection = DriverManager.getConnection(url,user,password);
 
@@ -28,7 +28,7 @@ public abstract class Database {
         }
     }
 
-    public void closeAllSql(){
+    public static void closeAllSql(){
         try{
             if(connection!=null)
                 connection.close();
