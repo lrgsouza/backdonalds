@@ -13,9 +13,8 @@ public class Main {
     public static void main(String[] args) {
 
         //call login
-        //Usuario usuario = new UsuarioController().login();
-        Usuario usuario = new UsuarioDao().get(1L);
-        usuario.setFuncionario(new FuncionarioDao().get(usuario.getFuncionario_id()));
+        Usuario usuario = UsuarioController.login();
+        //Usuario usuario = new UsuarioDao().get(1L);
         /*===========================================================================*/
         System.out.println("Seja bem vindo " + usuario.getFuncionario().getNome());
 

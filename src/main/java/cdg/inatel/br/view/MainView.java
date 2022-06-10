@@ -12,19 +12,6 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class MainView {
-
-    public Usuario login(){
-        Scanner input = new Scanner(System.in);
-        Usuario usuario = new Usuario();
-        System.out.println("===========SYSTEM LOGIN===========");
-        System.out.print("Login: ");
-        usuario.setLogin(input.next());
-        System.out.print("Password: ");
-        usuario.setSenha(input.next());
-        System.out.println("==================================");
-        return usuario;
-    }
-
     public static void mainMenu(){
         Scanner input = new Scanner(System.in);
         System.out.println("===========SYSTEM MENU===========");
@@ -35,18 +22,11 @@ public class MainView {
         System.out.println("==================================");
         System.out.print("=> ");
         int opcao = input.nextInt();
-        switch (opcao){
-            case 1:
-                System.out.println("efetuando pedido");
-                new PedidoController().efetuarPedido();
-                break;
-            case 2:
-                System.out.println("cancelando pedido");
-                break;
-            case 3:
-                allPedidos();
-                break;
-            case 4:
+        switch (opcao) {
+            case 1 -> PedidoController.efetuarPedido();
+            case 2 -> System.out.println("cancelando pedido");
+            case 3 -> allPedidos();
+            case 4 -> {
                 System.out.print("Saindo");
                 for (int i = 0; i < 3; i++) {
                     try {
@@ -56,10 +36,11 @@ public class MainView {
                     }
                     System.out.print(".");
                 }
-                break;
-            default:
+            }
+            default -> {
                 System.out.println("Entrada invalida!");
                 mainMenu();
+            }
         }
     }
 
@@ -138,8 +119,8 @@ public class MainView {
 
         Ordem ordem;
 
-        boolean novaOrdem = true;
-        boolean novoAdd = true;
+        boolean novaOrdem;
+        boolean novoAdd;
 
         do{
             ordem = new Ordem();

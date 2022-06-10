@@ -11,12 +11,11 @@ public abstract class Database {
 
     //user pass db
     static final String user = "root";
-    static final String password = "luc@S2017";
+    static final String password = "root";
     static final String database = "backdonalds";
 
     //URL
     static final String url = "jdbc:mysql://localhost:3306/" + database + "?useTimezone=true&serverTimezone=UTC&useSSL=false";
-    private boolean check = false;
 
     // =====> connect <=====
     public static void connect(){
