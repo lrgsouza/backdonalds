@@ -12,21 +12,16 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
     public Pedido get(Long id) {
         connect();
 
-        Pedido pedido = new Pedido();
         String sql = "SELECT * FROM pedido WHERE id = ?;";
 
+        Pedido pedido = null;
         try {
-            int i = 0;
             pst = connection.prepareStatement(sql);
-            pst.setLong(++i, id);
+            pst.setLong(1, id);
             result = pst.executeQuery();
 
             while (result.next()) {
-                pedido.setId(result.getLong("id"));
-                pedido.setNome(result.getString("nome"));
-                pedido.setFinalizado(result.getBoolean("finalizado"));
-                pedido.setRetirado(result.getBoolean("retirado"));
-                pedido.setPago(result.getBoolean("pago"));
+                pedido = Pedido.getByResult(result);
             }
 
         }catch(SQLException e){
@@ -49,13 +44,7 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
             statement = connection.createStatement();
             result = statement.executeQuery(sql);
             while(result.next()){
-                Pedido pedido = new Pedido();
-                pedido.setId(result.getLong("id"));
-                pedido.setNome(result.getString("nome"));
-                pedido.setFinalizado(result.getBoolean("finalizado"));
-                pedido.setRetirado(result.getBoolean("retirado"));
-                pedido.setPago(result.getBoolean("pago"));
-
+                Pedido pedido = Pedido.getByResult(result);
                 pedidos.add(pedido);
             }
         }catch(SQLException e){
@@ -70,8 +59,6 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
 
     public void saveReturning(Pedido pedido) {
         connect();
-
-        ArrayList<Pedido> pedidos = new ArrayList<>();
         String sql = "INSERT INTO pedido (nome) VALUES" +
                         "(?);";
 

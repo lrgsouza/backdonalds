@@ -1,14 +1,12 @@
 package cdg.inatel.br.model;
 
 import cdg.inatel.br.dao.PedidoDao;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
-@NoArgsConstructor
 @Data
 public class Pedido {
     private Long id;
@@ -25,6 +23,7 @@ public class Pedido {
         pago = false;
     }
 
+
     public static Pedido getUserInput(){
         Scanner input = new Scanner(System.in);
         System.out.print("Nome do cliente: ");
@@ -32,6 +31,15 @@ public class Pedido {
         Pedido pedido = new Pedido(nome);
         new PedidoDao().saveReturning(pedido);
         return pedido;
+    }
+
+    public static Pedido getByResult(ResultSet result) throws SQLException {
+        Long id = result.getLong("id");
+        String nome = result.getString("nome");
+        Boolean finalizado = result.getBoolean("finalizado");
+        Boolean retirado = result.getBoolean("retirado");
+        Boolean pago = result.getBoolean("pago");
+        return new Pedido(id, nome, finalizado, retirado, pago);
     }
 
 }

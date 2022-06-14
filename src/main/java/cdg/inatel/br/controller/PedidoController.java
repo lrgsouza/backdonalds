@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class PedidoController {
     Scanner input = new Scanner(System.in);
 
-    public Pedido efetuarPedido(){
+    public static void efetuarPedido(){
         //criando pedido
         Pedido pedido = Pedido.getUserInput();
 
@@ -21,15 +21,13 @@ public class PedidoController {
 
         //mostrando pedido
         mostrarPedido(pedido.getId());
-
-        return pedido;
     }
 
-    public void mostrarPedido(Long pedido_id){
+    public static void mostrarPedido(Long pedido_id){
         Pedido pedido = new PedidoDao().get(pedido_id);
         ArrayList<Ordem> ordens = new OrdemController().getByPedidoId(pedido_id);
 
-        new MainView().showPedido(pedido, ordens);
+        MainView.showPedido(pedido, ordens);
 
     }
 

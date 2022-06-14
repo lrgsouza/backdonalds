@@ -8,7 +8,7 @@ import java.util.List;
 
 public class UsuarioDao extends Database implements BaseDao<Usuario> {
 
-    public Usuario getLogin(Usuario usuario) {
+    public static Usuario getLogin(Usuario usuario) {
         connect();
 
         String sql = "SELECT * FROM usuario WHERE login = ? AND senha = ?;";
@@ -21,12 +21,9 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             result = pst.executeQuery();
 
             if (!result.next()) {
-                usuario = null;
+                return null;
             } else {
-                usuario.setId(result.getLong("id"));
-                usuario.setLogin(result.getString("login"));
-                usuario.setSenha(result.getString("senha"));
-                usuario.setFuncionario_id(result.getLong("funcionario_id"));
+                usuario = Usuario.getByResult(result);
             }
 
         } catch (SQLException e) {

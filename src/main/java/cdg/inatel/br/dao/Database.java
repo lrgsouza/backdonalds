@@ -16,7 +16,6 @@ public abstract class Database {
 
     //URL
     static final String url = "jdbc:mysql://localhost:3306/" + database + "?useTimezone=true&serverTimezone=UTC&useSSL=false";
-    private boolean check = false;
 
     // =====> connect <=====
     public static void connect(){

@@ -22,10 +22,7 @@ public class ProdutoDao extends Database implements BaseDao<Produto> {
             result = pst.executeQuery();
 
             while (result.next()) {
-                produto.setId(result.getLong("id"));
-                produto.setNome(result.getString("nome"));
-                produto.setValor(result.getDouble("valor"));
-                produto.setDescricao(result.getString("descricao"));
+                produto = Produto.getByResult(result);
             }
 
         }catch(SQLException e){
