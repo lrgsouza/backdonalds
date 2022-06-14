@@ -9,7 +9,7 @@ import cdg.inatel.br.view.MainView;
 import java.util.ArrayList;
 
 public class OrdemController {
-    public void realizarOrdens(Long pedido_id){
+    public static void realizarOrdens(Long pedido_id){
         var ordens = new MainView().getOrdens(pedido_id);
 
         for (Ordem ordem:

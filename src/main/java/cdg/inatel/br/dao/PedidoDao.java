@@ -68,7 +68,7 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
     }
 
 
-    public static void saveReturning(Pedido pedido) {
+    public void saveReturning(Pedido pedido) {
         connect();
 
         ArrayList<Pedido> pedidos = new ArrayList<>();

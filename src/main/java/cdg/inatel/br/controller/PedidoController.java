@@ -17,7 +17,7 @@ public class PedidoController {
         Pedido pedido = Pedido.getUserInput();
 
         //criando ordens com o id do pedido
-        new OrdemController().realizarOrdens(pedido.getId());
+        OrdemController.realizarOrdens(pedido.getId());
 
         //mostrando pedido
         mostrarPedido(pedido.getId());
