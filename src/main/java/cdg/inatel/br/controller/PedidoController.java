@@ -9,6 +9,8 @@ import cdg.inatel.br.view.MainView;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static cdg.inatel.br.view.MainView.waiting;
+
 public class PedidoController {
     Scanner input = new Scanner(System.in);
 
@@ -18,6 +20,13 @@ public class PedidoController {
 
         //criando ordens com o id do pedido
         OrdemController.realizarOrdens(pedido.getId());
+
+        //pagando pedido
+        System.out.println("Processando pagamento");
+        waiting();
+        System.out.println("\nTransação Autorizada!");
+        pedido.setPago(true);
+        new PedidoDao().update(pedido);
 
         //mostrando pedido
         mostrarPedido(pedido.getId());

@@ -23,6 +23,13 @@ public class Pedido {
         pago = false;
     }
 
+    private Pedido(Long id, String nome, Boolean finalizado, Boolean retirado, Boolean pago) {
+        this.id = id;
+        this.nome = nome;
+        this.finalizado = finalizado;
+        this.retirado = retirado;
+        this.pago = pago;
+    }
 
     public static Pedido getUserInput(){
         Scanner input = new Scanner(System.in);

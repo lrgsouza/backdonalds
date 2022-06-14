@@ -56,6 +56,91 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
         return pedidos;
     }
 
+    public ArrayList<Pedido> getAllFinalizados() {
+        connect();
+
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT * FROM pedido WHERE finalizado and pago and retirado;";
+
+        try {
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+            while(result.next()){
+                Pedido pedido = Pedido.getByResult(result);
+                pedidos.add(pedido);
+            }
+        }catch(SQLException e){
+            System.out.println("Erro de operação: " + e.getMessage());
+        }
+        finally {
+            closeAllSql();
+        }
+        return pedidos;
+    }
+
+    public ArrayList<Pedido> getAllEmAndamento() {
+        connect();
+
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT * FROM pedido WHERE NOT finalizado OR NOT pago OR NOT retirado;";
+
+        try {
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+            while(result.next()){
+                Pedido pedido = Pedido.getByResult(result);
+                pedidos.add(pedido);
+            }
+        }catch(SQLException e){
+            System.out.println("Erro de operação: " + e.getMessage());
+        }
+        finally {
+            closeAllSql();
+        }
+        return pedidos;
+    }
+    public ArrayList<Pedido> getAllCozinha() {
+        connect();
+
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT * FROM pedido WHERE NOT finalizado;";
+
+        try {
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+            while(result.next()){
+                Pedido pedido = Pedido.getByResult(result);
+                pedidos.add(pedido);
+            }
+        }catch(SQLException e){
+            System.out.println("Erro de operação: " + e.getMessage());
+        }
+        finally {
+            closeAllSql();
+        }
+        return pedidos;
+    }
+    public ArrayList<Pedido> getAllBalcao() {
+        connect();
+
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT * FROM pedido WHERE finalizado and NOT retirado;";
+
+        try {
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+            while(result.next()){
+                Pedido pedido = Pedido.getByResult(result);
+                pedidos.add(pedido);
+            }
+        }catch(SQLException e){
+            System.out.println("Erro de operação: " + e.getMessage());
+        }
+        finally {
+            closeAllSql();
+        }
+        return pedidos;
+    }
 
     public void saveReturning(Pedido pedido) {
         connect();
@@ -112,7 +197,7 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
         connect();
 
         String sql = "UPDATE pedido SET " +
-                "nome = ?, codigo = ?, retirado =?, finalizado = ?, pago =? " +
+                "nome = ?, retirado =?, finalizado = ?, pago =? " +
                 "WHERE id = ?;";
 
         try {
@@ -126,7 +211,6 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
 
             pst.execute();
 
-            System.out.println("Executado com sucesso");
 
         }catch(SQLException e){
             System.out.println("Erro de operação: " + e.getMessage());
@@ -148,7 +232,6 @@ public class PedidoDao extends Database implements BaseDao<Pedido> {
 
             pst.execute();
 
-            System.out.println("Deletado com sucesso");
 
         }catch(SQLException e){
             System.out.println("Erro de operação: " + e.getMessage());

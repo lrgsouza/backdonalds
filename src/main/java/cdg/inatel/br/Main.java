@@ -13,8 +13,8 @@ public class Main {
     public static void main(String[] args) {
 
         //call login
-        Usuario usuario = new UsuarioController().login();
-        //Usuario usuario = new UsuarioDao().get(1L);
+        //Usuario usuario = UsuarioController.login(); //definitivo
+        Usuario usuario = new UsuarioDao().get(1L); //temporario auto_login
         usuario.setFuncionario(new FuncionarioDao().get(usuario.getFuncionario_id()));
 
         /*===========================================================================*/

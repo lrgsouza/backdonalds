@@ -29,9 +29,5 @@ public class OrdemController {
         return ordens;
     }
 
-
-    public ArrayList<Adicional> getAdicionaisByOrdemId(Long ordem_id) {
-        return (ArrayList<Adicional>) new AdicionalDao().getByOrdemId(ordem_id);
-    }
 }
 
