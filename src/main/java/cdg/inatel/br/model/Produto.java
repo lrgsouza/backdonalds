@@ -15,6 +15,7 @@ public class Produto {
     private String nome;
     private Double valor;
     private String descricao;
+    private int produto_tipo_id;
 
     public static Produto getByResult(ResultSet result) throws SQLException {
         Produto produto = new Produto();
@@ -22,6 +23,7 @@ public class Produto {
         produto.setNome(result.getString("nome"));
         produto.setValor(result.getDouble("valor"));
         produto.setDescricao(result.getString("descricao"));
+        produto.setProduto_tipo_id(result.getInt("produto_tipo_id"));
         return produto;
     }
 }

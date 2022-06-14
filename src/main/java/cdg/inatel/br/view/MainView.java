@@ -58,9 +58,9 @@ public class MainView {
             case 0 -> {
                 System.out.print("Saindo");
                 waiting();
+                break;
             }
             default -> System.out.println("Entrada invalida!");
-
         }
 
     }
@@ -298,21 +298,26 @@ public class MainView {
             ordem.setObservacoes(input.nextLine());
             ordem.setPedido_id(pedido_id);
 
-            //adicionando adicionais
-            System.out.println("Deseja adicional? (y/n): ");
-            novoAdd = input.next().equals("y");
-            var adicionais = new ArrayList<Adicional>();
-
-            while (novoAdd){
-                allAdicionais();
-                var adicional = new Adicional();
-                System.out.print("Adicional: ");
-                adicional.setId(input.nextLong());
-                adicionais.add(adicional);
-                System.out.println("Mais algum adicional? (y/n): ");
+            //checa se é comida
+            var produto = new ProdutoDao().get(ordem.getProduto_id());
+            if (produto.getProduto_tipo_id() == 1){
+                //adicionando adicionais
+                System.out.println("Deseja adicional? (y/n): ");
                 novoAdd = input.next().equals("y");
-             }
-            ordem.setAdicionais(adicionais);
+                var adicionais = new ArrayList<Adicional>();
+
+                while (novoAdd){
+                    allAdicionais();
+                    var adicional = new Adicional();
+                    System.out.print("Adicional: ");
+                    adicional.setId(input.nextLong());
+                    adicionais.add(adicional);
+                    System.out.println("Mais algum adicional? (y/n): ");
+                    novoAdd = input.next().equals("y");
+                }
+                ordem.setAdicionais(adicionais);
+            }
+
             ordens.add(ordem);
 
             System.out.print("Deseja incluir nova ordem? (y/n): ");
