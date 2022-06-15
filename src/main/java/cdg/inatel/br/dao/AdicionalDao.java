@@ -12,7 +12,7 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
     public Adicional get(Long id) {
         connect();
 
-        Adicional adicional = new Adicional();
+        Adicional adicional = null;
         String sql = "SELECT * FROM adicional WHERE id = ?;";
 
         try {
@@ -22,9 +22,7 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
             result = pst.executeQuery();
 
             while (result.next()) {
-                adicional.setId(result.getLong("id"));
-                adicional.setNome(result.getString("nome"));
-                adicional.setValor(result.getDouble("valor"));
+                adicional = Adicional.getByResult(result);
             }
 
         }catch(SQLException e){
@@ -47,10 +45,7 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
             statement = connection.createStatement();
             result = statement.executeQuery(sql);
             while(result.next()){
-                Adicional adicional = new Adicional();
-                adicional.setId(result.getLong("id"));
-                adicional.setNome(result.getString("nome"));
-                adicional.setValor(result.getDouble("valor"));
+                Adicional adicional = Adicional.getByResult(result);
 
                 adicionais.add(adicional);
             }
@@ -80,10 +75,7 @@ public class AdicionalDao extends Database implements BaseDao<Adicional> {
 
             result = pst.executeQuery();
             while(result.next()){
-                Adicional adicional = new Adicional();
-                adicional.setId(result.getLong("id"));
-                adicional.setNome(result.getString("nome"));
-                adicional.setValor(result.getDouble("valor"));
+                Adicional adicional = Adicional.getByResult(result);
 
                 adicionais.add(adicional);
             }

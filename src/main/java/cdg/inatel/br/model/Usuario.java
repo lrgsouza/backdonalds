@@ -10,8 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
 public class Usuario {
     private Long id;
@@ -20,15 +18,22 @@ public class Usuario {
     private String senha;
     private Funcionario funcionario;
 
+    public Usuario(String login, String senha) {
+        this.login = login;
+        this.senha = senha;
+    }
+
     public static Usuario login(){
         Scanner input = new Scanner(System.in);
-        Usuario usuario = new Usuario();
         System.out.println("===========SYSTEM LOGIN===========");
         System.out.print("Login: ");
-        usuario.setLogin(input.next());
+        String login = input.next();
         System.out.print("Password: ");
-        usuario.setSenha(input.next());
+        String senha = input.next();
         System.out.println("==================================");
+
+        Usuario usuario = new Usuario(login, senha);
+
         usuario = UsuarioDao.getLogin(usuario);
 
         if(usuario != null){
@@ -41,13 +46,19 @@ public class Usuario {
         return usuario;
     }
 
+    public Usuario(Long id, Long funcionario_id, String login, String senha) {
+        this.id = id;
+        this.funcionario_id = funcionario_id;
+        this.login = login;
+        this.senha = senha;
+    }
+
     public static Usuario getByResult(ResultSet result) throws SQLException {
-        Usuario usuario = new Usuario();
-        usuario.setId(result.getLong("id"));
-        usuario.setLogin(result.getString("login"));
-        usuario.setSenha(result.getString("senha"));
-        usuario.setFuncionario_id(result.getLong("funcionario_id"));
-        return usuario;
+        Long id = result.getLong("id");
+        Long funcionario_id = result.getLong("funcionario_id");
+        String login = result.getString("login");
+        String senha = result.getString("senha");
+        return new Usuario(id, funcionario_id, login, senha);
     }
 
 
