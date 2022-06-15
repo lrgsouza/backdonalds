@@ -13,7 +13,7 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
     public Ordem get(Long id) {
         connect();
 
-        Ordem ordem = new Ordem();
+        Ordem ordem = null;
         String sql = "SELECT * FROM ordem WHERE id = ?;";
 
         try {
@@ -23,11 +23,7 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
             result = pst.executeQuery();
 
             while (result.next()) {
-                ordem.setId(result.getLong("id"));
-                ordem.setPedido_id(result.getLong("pedido_id"));
-                ordem.setQuantidade(result.getInt("quantidade"));
-                ordem.setProduto_id(result.getLong("produto_id"));
-                ordem.setObservacoes(result.getString("observacoes"));
+                ordem = Ordem.getByResult(result);
             }
 
         }catch(SQLException e){
@@ -50,13 +46,7 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
             statement = connection.createStatement();
             result = statement.executeQuery(sql);
             while(result.next()){
-                Ordem ordem = new Ordem();
-
-                ordem.setId(result.getLong("id"));
-                ordem.setPedido_id(result.getLong("pedido_id"));
-                ordem.setQuantidade(result.getInt("quantidade"));
-                ordem.setProduto_id(result.getLong("produto_id"));
-                ordem.setObservacoes(result.getString("observacoes"));
+                Ordem ordem = Ordem.getByResult(result);
 
                 ordens.add(ordem);
             }
@@ -82,12 +72,7 @@ public class OrdemDao extends Database implements BaseDao<Ordem> {
 
             result = pst.executeQuery();
             while(result.next()){
-                Ordem ordem = new Ordem();
-                ordem.setId(result.getLong("id"));
-                ordem.setPedido_id(result.getLong("pedido_id"));
-                ordem.setQuantidade(result.getInt("quantidade"));
-                ordem.setProduto_id(result.getLong("produto_id"));
-                ordem.setObservacoes(result.getString("observacoes"));
+                Ordem ordem = Ordem.getByResult(result);
 
                 ordens.add(ordem);
             }

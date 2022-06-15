@@ -4,7 +4,6 @@ import cdg.inatel.br.model.Produto;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProdutoDao extends Database implements BaseDao<Produto> {
 
@@ -12,7 +11,7 @@ public class ProdutoDao extends Database implements BaseDao<Produto> {
     public Produto get(Long id) {
         connect();
 
-        Produto produto = new Produto();
+        Produto produto = null;
         String sql = "SELECT * FROM produto WHERE id = ?;";
 
         try {
@@ -45,11 +44,7 @@ public class ProdutoDao extends Database implements BaseDao<Produto> {
             statement = connection.createStatement();
             result = statement.executeQuery(sql);
             while(result.next()){
-                Produto produto = new Produto();
-                produto.setId(result.getLong("id"));
-                produto.setNome(result.getString("nome"));
-                produto.setValor(result.getDouble("valor"));
-                produto.setDescricao(result.getString("descricao"));
+                Produto produto = Produto.getByResult(result);
 
                 produtos.add(produto);
             }

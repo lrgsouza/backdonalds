@@ -3,7 +3,6 @@ package cdg.inatel.br;
 import cdg.inatel.br.controller.UsuarioController;
 import cdg.inatel.br.dao.FuncionarioDao;
 import cdg.inatel.br.dao.PedidoDao;
-import cdg.inatel.br.dao.TruncateDao;
 import cdg.inatel.br.dao.UsuarioDao;
 import cdg.inatel.br.model.Pedido;
 import cdg.inatel.br.model.Usuario;

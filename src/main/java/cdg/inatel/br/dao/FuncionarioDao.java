@@ -13,7 +13,7 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
     public Funcionario get(Long id) {
         connect();
 
-        Funcionario funcionario = new Funcionario();
+        Funcionario funcionario = null;
         String sql = "SELECT * FROM funcionario WHERE id = ?;";
 
         try {
@@ -23,10 +23,7 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             result = pst.executeQuery();
 
             while (result.next()) {
-                funcionario.setId(result.getLong("id"));
-                funcionario.setNome(result.getString("nome"));
-                funcionario.setEmail(result.getString("email"));
-                funcionario.setTelefone(result.getString("telefone"));
+                funcionario = Funcionario.getByResult(result);
             }
 
         }catch(SQLException e){
@@ -49,11 +46,7 @@ public class FuncionarioDao extends Database implements BaseDao<Funcionario> {
             statement = connection.createStatement();
             result = statement.executeQuery(sql);
             while(result.next()){
-                Funcionario funcionario = new Funcionario();
-                funcionario.setId(result.getLong("id"));
-                funcionario.setNome(result.getString("nome"));
-                funcionario.setEmail(result.getString("email"));
-                funcionario.setTelefone(result.getString("telefone"));
+                Funcionario funcionario = Funcionario.getByResult(result);
 
                 funcionarios.add(funcionario);
             }

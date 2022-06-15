@@ -48,5 +48,4 @@ public class Pedido {
         Boolean pago = result.getBoolean("pago");
         return new Pedido(id, nome, finalizado, retirado, pago);
     }
-
 }

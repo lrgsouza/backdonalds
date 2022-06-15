@@ -40,7 +40,7 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
     public Usuario get(Long id) {
         connect();
 
-        Usuario usuario = new Usuario();
+        Usuario usuario = null;
         String sql = "SELECT * FROM usuario WHERE id = ?;";
 
         try {
@@ -50,10 +50,7 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             result = pst.executeQuery();
 
             while (result.next()) {
-                usuario.setId(result.getLong("id"));
-                usuario.setLogin(result.getString("login"));
-                usuario.setSenha(result.getString("senha"));
-                usuario.setFuncionario_id(result.getLong("funcionario_id"));
+                usuario = Usuario.getByResult(result);
             }
 
         }catch(SQLException e){
@@ -76,11 +73,7 @@ public class UsuarioDao extends Database implements BaseDao<Usuario> {
             statement = connection.createStatement();
             result = statement.executeQuery(sql);
             while(result.next()){
-                Usuario usuario = new Usuario();
-                usuario.setId(result.getLong("id"));
-                usuario.setLogin(result.getString("login"));
-                usuario.setSenha(result.getString("senha"));
-                usuario.setFuncionario_id(result.getLong("funcionario_id"));
+                Usuario usuario = Usuario.getByResult(result);
 
                 usuarios.add(usuario);
             }
