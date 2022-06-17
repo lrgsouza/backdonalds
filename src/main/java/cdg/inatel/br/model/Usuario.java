@@ -2,9 +2,7 @@ package cdg.inatel.br.model;
 
 import cdg.inatel.br.dao.FuncionarioDao;
 import cdg.inatel.br.dao.UsuarioDao;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

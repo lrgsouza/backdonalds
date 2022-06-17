@@ -1,13 +1,11 @@
 package cdg.inatel.br.view;
 
-import cdg.inatel.br.Main;
 import cdg.inatel.br.controller.PedidoController;
 import cdg.inatel.br.dao.AdicionalDao;
 import cdg.inatel.br.dao.PedidoDao;
 import cdg.inatel.br.dao.ProdutoDao;
 import cdg.inatel.br.model.*;
 
-import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -281,22 +279,12 @@ public class MainView {
         System.out.println("Escolha um produto: ");
 
 
-        Ordem ordem;
-
         boolean novaOrdem;
         boolean novoAdd;
 
         do{
             allProdutos();
-            ordem = new Ordem();
-            System.out.print("Produto: ");
-            ordem.setProduto_id(input.nextLong());
-            System.out.print("Quantidade: ");
-            ordem.setQuantidade(input.nextInt());
-            input.nextLine();
-            System.out.print("Observacao: ");
-            ordem.setObservacoes(input.nextLine());
-            ordem.setPedido_id(pedido_id);
+            Ordem ordem = Ordem.getUserInput(pedido_id);
 
             //checa se é comida
             var produto = new ProdutoDao().get(ordem.getProduto_id());
@@ -308,10 +296,8 @@ public class MainView {
 
                 while (novoAdd){
                     allAdicionais();
-                    var adicional = new Adicional();
                     System.out.print("Adicional: ");
-                    adicional.setId(input.nextLong());
-                    adicionais.add(adicional);
+                    adicionais.add(Adicional.inputId(input.nextLong()));
                     System.out.println("Mais algum adicional? (y/n): ");
                     novoAdd = input.next().equals("y");
                 }
