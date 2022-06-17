@@ -1,13 +1,11 @@
 package cdg.inatel.br.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Data
-@NoArgsConstructor
 public class Adicional {
     private Long id;
     private String nome;
@@ -17,6 +15,14 @@ public class Adicional {
         this.id = id;
         this.nome = nome;
         this.valor = valor;
+    }
+
+    private Adicional(Long id){
+        this.id = id;
+    }
+
+    public static Adicional inputId(Long id){
+        return new Adicional(id);
     }
 
     public static Adicional getByResult(ResultSet result) throws SQLException {

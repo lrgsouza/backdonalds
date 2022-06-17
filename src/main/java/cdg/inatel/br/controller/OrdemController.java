@@ -1,6 +1,5 @@
 package cdg.inatel.br.controller;
 
-import cdg.inatel.br.dao.AdicionalDao;
 import cdg.inatel.br.dao.OrdemDao;
 import cdg.inatel.br.model.Adicional;
 import cdg.inatel.br.model.Ordem;
