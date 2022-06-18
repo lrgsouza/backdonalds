@@ -162,7 +162,7 @@ INSERT INTO produto VALUES (3,'X-Bacon',12.9,'Pão, Hamburguer, Queijo, Bacon, S
 INSERT INTO produto VALUES (4,'Água sem Gás',4.00,'Garrafa 500ml',2);
 INSERT INTO produto VALUES (5,'Água com Gás',4.00,'Garrafa 500ml',2);
 INSERT INTO produto VALUES (6,'Coca-Cola',7.00,'Lata 350ml',2);
-INSERT INTO produto VALUES (7,'Sprite',7.00,'Lata 350ml',2;
+INSERT INTO produto VALUES (7,'Sprite',7.00,'Lata 350ml',2);
 INSERT INTO produto VALUES (8,'Fanta',7.00,'Lata 350ml',2);
 INSERT INTO produto VALUES (9,'Torta de maçã',9.00,'150g',3);
 INSERT INTO produto VALUES (10,'Sorvete Soft',9.00,'Casquinha',3);

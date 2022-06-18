@@ -12,8 +12,7 @@ public class Main {
     public static void main(String[] args) {
 
         //call login
-        //Usuario usuario = UsuarioController.login(); //definitivo
-        Usuario usuario = new UsuarioDao().get(1L); //temporario auto_login
+        Usuario usuario = UsuarioController.login(); //definitivo
         usuario.setFuncionario(new FuncionarioDao().get(usuario.getFuncionario_id()));
 
         /*===========================================================================*/

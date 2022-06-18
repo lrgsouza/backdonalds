@@ -93,9 +93,7 @@ public class MainView {
             System.out.println("================================");
             System.out.print("Insira o ID do pedido para mais detalhes, ou digite 0 para voltar ao menu principal: ");
             long idPedido = input.nextLong();
-            if (idPedido == 0) {
-                mainMenu();
-            } else {
+            if (idPedido != 0) {
                 PedidoController.mostrarPedido(idPedido);
             }
         }
@@ -118,9 +116,7 @@ public class MainView {
             System.out.println("================================");
             System.out.print("Insira o ID do pedido para mais detalhes, ou digite 0 para voltar ao menu principal: ");
             long idPedido = input.nextLong();
-            if (idPedido == 0) {
-                mainMenu();
-            } else {
+            if (idPedido != 0) {
                 PedidoController.mostrarPedido(idPedido);
             }
         }
@@ -143,9 +139,7 @@ public class MainView {
             System.out.println("================================");
             System.out.print("Insira o ID do pedido para finaliza-lo, ou digite 0 para voltar ao menu principal: ");
             long idPedido = input.nextLong();
-            if (idPedido == 0){
-                mainMenu();
-            }else{
+            if (idPedido != 0){
                 //atualizando finalizado
                 Pedido pedido = pedidoDao.get(idPedido);
                 pedido.setFinalizado(true);
@@ -174,9 +168,7 @@ public class MainView {
             System.out.println("================================");
             System.out.print("Insira o ID do pedido para retirada, ou digite 0 para voltar ao menu principal: ");
             long idPedido = input.nextLong();
-            if (idPedido == 0) {
-                mainMenu();
-            } else {
+            if (idPedido != 0) {
                 //atualizando retirado
                 Pedido pedido = pedidoDao.get(idPedido);
                 pedido.setRetirado(true);
@@ -203,9 +195,7 @@ public class MainView {
             System.out.println("================================");
             System.out.print("Insira o ID do pedido para cancela-lo, ou digite 0 para voltar ao menu principal: ");
             long idPedido = input.nextLong();
-            if (idPedido == 0){
-                mainMenu();
-            }else{
+            if (idPedido != 0){
                 //atualizando finalizado
                 Pedido pedido = pedidoDao.get(idPedido);
                 pedidoDao.delete(pedido);
@@ -224,7 +214,7 @@ public class MainView {
                 ordens) {
             valorTotal += showOrdem(ordem);
         }
-        System.out.println("Total pedido (R$"+valorTotal+")");
+        System.out.println("Total pedido (R$"+String.format("%.2f", valorTotal)+")");
         //System.out.println("================================");
     }
 
@@ -235,16 +225,17 @@ public class MainView {
         double valorTotal = (produto.getValor() * ordem.getQuantidade());
 
         System.out.println("      " + ordem.getQuantidade() + " " +
-                produto.getNome() + "(R$" + (produto.getValor() * ordem.getQuantidade()) + ")");
+                produto.getNome() + "(R$" + String.format("%.2f", (produto.getValor() * ordem.getQuantidade())) + ")");
 
         for (Adicional adicional:
                 ordem.getAdicionais()) {
-            System.out.println("            + " + adicional.getNome() + "(R$" + adicional.getValor() + ")");
+            System.out.println("            + " + adicional.getNome() + "(R$" + String.format("%.2f", adicional.getValor()) + ")");
             valorTotal += (ordem.getQuantidade() * adicional.getValor());
         }
 
-        System.out.println("      Obs: " + ordem.getObservacoes());
-        System.out.println("      Total (R$" + valorTotal + ")");
+        if(!ordem.getObservacoes().equals(""))
+            System.out.println("      Obs: " + ordem.getObservacoes());
+        System.out.println("      Total (R$" + String.format("%.2f", valorTotal) + ")");
 
         System.out.println("================================");
         return valorTotal;
@@ -256,7 +247,7 @@ public class MainView {
         for (
                 Produto p :
                 produtos) {
-            System.out.println(p.getId()+". "+p.getNome()+"(R$"+p.getValor()+")");
+            System.out.println(p.getId()+". "+p.getNome()+"(R$"+String.format("%.2f", p.getValor())+")");
             System.out.println("     "+p.getDescricao());
         }
         System.out.println("================================");
@@ -268,7 +259,7 @@ public class MainView {
         for (
                 Adicional a :
                 adicionais) {
-            System.out.println(a.getId()+". "+a.getNome()+"(R$"+a.getValor()+")");
+            System.out.println(a.getId()+". "+a.getNome()+"(R$"+String.format("%.2f", a.getValor())+")");
         }
         System.out.println("================================");
     }
