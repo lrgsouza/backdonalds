@@ -56,7 +56,7 @@ public class MainView {
             case 0 -> {
                 System.out.print("Saindo");
                 waiting();
-                break;
+                System.exit(0);
             }
             default -> System.out.println("Entrada invalida!");
         }
